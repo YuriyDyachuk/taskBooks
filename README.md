@@ -30,7 +30,7 @@ Documentation start project
     # mysql -u root -p > home/name.sql;
     # enter password;
 ------------------
-- config/config_db.php - изменяем на всою DB,root,pass;
+- config/config_db.php - изменяем на свою DB,root,pass;
 ------------------
     # 'dsn' => 'mysql:host=localhost;dbname=;charset=utf8';
     # 'user' => '';
