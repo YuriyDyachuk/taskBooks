@@ -40,4 +40,6 @@ Documentation start project
 -
 - composer install -o
 -
+- login: admin
+- pass: 123
 -
