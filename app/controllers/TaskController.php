@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\User;
+use PDO;
 
 class TaskController extends BaseController
 {
@@ -40,5 +41,45 @@ class TaskController extends BaseController
         }
 
         $this->setMeta('Добавление новой задачи');
+    }
+
+    public function editAction()
+    {
+        $tasks = new Task();
+        $id = !empty($_GET['id']) ? $_GET['id'] : null;
+        $task = \R::findOne('tasks','id = ?',[$id]);
+        $user = 'root';
+        $pass = '';
+
+        $publish = $_POST['publish'];
+        $id_task = $_POST['id'];
+        if (!empty($_POST)) {
+            $pdo = new PDO('mysql:host=localhost;dbname=kinomonster', $user, $pass);
+            // set the PDO error mode to exception
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $data = [
+              'publish' => $publish,
+              'id' => $id_task,
+            ];
+
+            if (!$pdo) {
+                $tasks->getErrors();
+                $_SESSION['success'] = 'Ошибка редактирования';
+                $_SESSION['form-data'] = $data;
+            } else {
+                $sql = "UPDATE tasks SET publish=:publish WHERE id=:id";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($data);
+
+            }
+            $_SESSION['success'] = 'Задача успешно отредактирована';
+
+        }
+
+        $pdo = null;
+
+        $this->setMeta('Редактирование задачи');
+        $this->res(compact('task'));
     }
 }

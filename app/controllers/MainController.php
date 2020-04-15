@@ -14,7 +14,7 @@ class MainController extends BaseController
         $count = \R::count('tasks',"");
         $pagination = new Pagination($page,$perpage,$count);
         $start = $pagination->getStart();
-        $tasks = \R::getAll("SELECT `tasks`.`id`,`tasks`.`title`,`tasks`.`description`,`tasks`.`publish`,`tasks`.`created_at`,`users`.`name`,`users`.`email` FROM `tasks`,`users` WHERE `tasks`.`user_id` = `users`.`id` GROUP BY `tasks`.`id` ORDER BY `tasks`.`id` LIMIT $start,$perpage");
+        $tasks = \R::getAll("SELECT `tasks`.`id`,`tasks`.`title`,`tasks`.`description`,`tasks`.`publish`,`tasks`.`created_at`,`users`.`name`,`users`.`email` FROM `tasks`,`users` WHERE `tasks`.`user_id` = `users`.`id` GROUP BY `tasks`.`id` ORDER BY `tasks`.`id` DESC LIMIT $start,$perpage");
 
         $this->setMeta('Главная страница','Онлайн задачник','');
         $this->res(compact('tasks','pagination'));

@@ -18,6 +18,9 @@
         <th>Описание задачи</th>
         <th>Содержание задачи</th>
         <th>Статус</th>
+          <?php if ($_SESSION['user']['login'] == 'admin'): ?>
+        <th>Редактирование</th>
+          <?php endif; ?>
       </tr>
       </thead>
       <tbody>
@@ -34,6 +37,13 @@
             <?php else: ?>
             <td style="color: green">Выполнено</td>
           <?php endif; ?>
+            <?php if ($_SESSION['user']['login'] == 'admin'): ?>
+          <td>
+            <a href="<?= PATH ?>task/edit?id=<?=$task['id']?>">
+              <i class="fa fa-eye-slash" style="margin-left: 25%"></i>
+            </a>
+          </td>
+            <?php endif; ?>
         </tr>
       <?php endforeach; ?>
 
